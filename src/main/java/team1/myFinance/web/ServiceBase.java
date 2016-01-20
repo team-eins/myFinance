@@ -61,7 +61,7 @@ public abstract class ServiceBase {
     protected void initialize() {
         this.auth = this.auth == null ? new AuthenticationService() : this.auth;
         this.http = this.http == null ? new HttpService() : this.http;
-        //this.dh = this.dh == null ? ServiceLocator.getDataHandler() : this.dh;
+        this.dh = this.dh == null ? ServiceLocator.getDataHandler() : this.dh;
 
         if (this.logger == null) {
             initializeLogger();
