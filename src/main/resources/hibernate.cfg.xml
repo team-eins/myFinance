@@ -25,7 +25,7 @@
         <property name="hbm2ddl.auto">create</property>
 
         <!-- Names the annotations -->
-        <mapping class="main.java.data.model.Transaction"/>
+        <mapping class="team1.myFinance.data.model.Transaction"/>
 
     </session-factory>
 </hibernate-configuration> 

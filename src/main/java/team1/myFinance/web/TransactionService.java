@@ -2,7 +2,9 @@ package team1.myFinance.web;
 
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
@@ -33,14 +35,21 @@ public class TransactionService extends ServiceBase {
     public Collection<team1.myFinance.web.model.Transaction> getCategories(@Context HttpServletResponse response) {
 
         this.initialize();
-        Collection<Transaction> transactions = dh.getAllTransactions();
+//        Collection<Transaction> transactions = dh.getAllTransactions();
+//
+//        if (transactions == null) {
+//            http.cancelRequest(response, SC_INTERNAL_SERVER_ERROR);
+//            return null;
+//        }
 
-        if (transactions == null) {
-            http.cancelRequest(response, SC_INTERNAL_SERVER_ERROR);
-            return null;
-        }
+        team1.myFinance.web.model.Transaction t = new team1.myFinance.web.model.Transaction();
+        t.id = 1;
+        t.name = "Test";
 
-        return team1.myFinance.web.model.Transaction.parse(transactions);
+        List<team1.myFinance.web.model.Transaction> ts = new ArrayList<team1.myFinance.web.model.Transaction>();
+        ts.add(t);
+
+        return ts;
 
     }
 	
