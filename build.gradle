@@ -1,0 +1,82 @@
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'eclipse-wtp'
+
+configurations {
+    runtimeOnly
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Jersey
+    compile 'org.glassfish.jersey.containers:jersey-container-servlet-core:2.22.1'
+
+    // Heroku Settings
+    runtimeOnly "org.eclipse.jetty:jetty-runner:9.3.3.v20150827"
+
+	//PostgreSQL
+	compile 'org.postgresql:postgresql:9.4-1201-jdbc41'
+	
+	//Hibernate
+	compile 'org.hibernate:hibernate-core:4.3.8.Final'
+	
+	//Hashing
+	compile 'commons-codec:commons-codec:1.10'
+	
+	//Jackson
+	compile 'com.sun.jersey:jersey-json:1.19'
+	compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.22.1'
+	
+	//providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+	compile 'javax.servlet:javax.servlet-api:3.0.1'
+    compile 'org.apache.httpcomponents:httpcore:4.4.4'
+	
+	compile 'com.google.code.gson:gson:2.2.4'
+	
+	//Geocoder
+	compile 'com.google.code.geocoder-java:geocoder-java:0.16'
+	
+	//Logger
+	compile 'org.apache.logging.log4j:log4j-api:2.4.1'
+	runtime 'org.apache.logging.log4j:log4j-core:2.4.1'
+	runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.1'
+
+    //OAUTH0
+    compile 'com.auth0:java-jwt:2.1.0'
+	
+	//Test
+	testCompile 'junit:junit:4.12'
+	testCompile 'org.testng:testng:6+'
+	testCompile 'org.seleniumhq.selenium:selenium-firefox-driver:2+'
+	testCompile 'org.seleniumhq.selenium:selenium-support:2+'
+    testCompile 'org.mockito:mockito-core:2.0.31-beta'
+}
+
+
+// Tasks for heroku deployment
+
+task copyToLib << {
+    copy {
+        from configurations.runtimeOnly.copy().setTransitive(false)
+        into "$buildDir/libs"
+        rename { name ->
+            def artifacts = configurations.runtimeOnly.resolvedConfiguration.resolvedArtifacts
+            def artifact = artifacts.find { it.file.name == name }
+            "${artifact.name}.${artifact.extension}"
+        }
+    }
+}
+
+task stage(dependsOn: ["clean", "build", "copyToLib"])
+
+build.mustRunAfter clean
+copyToLib.mustRunAfter build
+
+test {
+  // enable TestNG support (default is JUnit)
+  // useTestNG()
+}
+
