@@ -1,4 +1,4 @@
-package main.java.team1.myFinance.web.model;
+package team1.myFinance.web.model;
 
 public enum AuthenticationType {
     LOCAL,

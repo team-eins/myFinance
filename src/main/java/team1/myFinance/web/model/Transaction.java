@@ -1,4 +1,4 @@
-package main.java.team1.myFinance.web.model;
+package team1.myFinance.web.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,7 +9,7 @@ public class Transaction {
 	public int id;
 	public String name;
 	
-    public static Transaction parse(main.java.data.model.Transaction transaction) {
+    public static Transaction parse(team1.myFinance.data.model.Transaction transaction) {
         if (transaction == null) {
             return null;
         }
@@ -22,12 +22,12 @@ public class Transaction {
         return trans;
     }
 
-    public static Collection<Transaction> parse(Collection<main.java.data.model.Transaction> transactions) {
+    public static Collection<Transaction> parse(Collection<team1.myFinance.data.model.Transaction> transactions) {
 
         List<Transaction> transs = new ArrayList<>();
 
         if (transactions != null) {
-            for (main.java.data.model.Transaction transaction : transactions) {
+            for (team1.myFinance.data.model.Transaction transaction : transactions) {
             	transs.add(Transaction.parse(transaction));
             }
         }

@@ -1,9 +1,10 @@
-package main.java.team1.myFinance.contracts;
+package team1.myFinance.contracts;
+
+import team1.myFinance.data.model.SavedUser;
+import team1.myFinance.data.model.Transaction;
 
 import java.util.Collection;
 
-import main.java.data.model.SavedUser;
-import main.java.data.model.Transaction;
 
 public interface IDataHandler {
 

@@ -1,4 +1,4 @@
-package main.java.team1.myFinance.web.helper;
+package team1.myFinance.web.helper;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -18,12 +18,12 @@ import org.apache.logging.log4j.LogManager;
 import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
+import team1.myFinance.contracts.IAuthenticationService;
+import team1.myFinance.web.ServiceBase;
+import team1.myFinance.web.model.AuthenticationType;
+import team1.myFinance.web.model.UserInfo;
 
-import main.java.team1.myFinance.web.ServiceBase;
-import main.java.team1.myFinance.web.model.UserInfo;
-import main.java.team1.myFinance.web.model.AuthenticationType;
-
-public class AuthenticationService extends ServiceBase implements main.java.team1.myFinance.contracts.IAuthenticationService {
+public class AuthenticationService extends ServiceBase implements IAuthenticationService {
 
     private final String TOKEN_REGEX = "^Bearer ([a-zA-Z0-9\\-_]+\\.[a-zA-Z0-9\\-_]+\\.[a-zA-Z0-9\\-_]+)$";
     private final String SECRET = "MY_SECRET";

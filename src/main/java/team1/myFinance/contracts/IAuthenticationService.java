@@ -1,9 +1,10 @@
-package main.java.team1.myFinance.contracts;
+package team1.myFinance.contracts;
+
+import team1.myFinance.web.model.UserInfo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.NotAuthorizedException;
 
-import main.java.team1.myFinance.web.model.UserInfo;
 
 public interface IAuthenticationService {
 

@@ -1,12 +1,9 @@
-package main.java.team1.myFinance.core;
+package team1.myFinance.core;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.ws.rs.ApplicationPath;
 
-/**
- * Created by adanek on 20.11.2015.
- */
 
 @ApplicationPath("api")
 public class App extends ResourceConfig {

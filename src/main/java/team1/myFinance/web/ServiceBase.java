@@ -1,14 +1,12 @@
-package main.java.team1.myFinance.web;
+package team1.myFinance.web;
 
 import org.apache.logging.log4j.Logger;
-
-import main.java.team1.myFinance.contracts.IAuthenticationService;
-import main.java.team1.myFinance.contracts.IDataHandler;
-import main.java.team1.myFinance.contracts.IHttpService;
-import main.java.team1.myFinance.core.ServiceLocator;
-import main.java.team1.myFinance.web.helper.AuthenticationService;
-import main.java.team1.myFinance.web.helper.HttpService;
-
+import team1.myFinance.contracts.IAuthenticationService;
+import team1.myFinance.contracts.IDataHandler;
+import team1.myFinance.contracts.IHttpService;
+import team1.myFinance.core.ServiceLocator;
+import team1.myFinance.web.helper.AuthenticationService;
+import team1.myFinance.web.helper.HttpService;
 
 public abstract class ServiceBase {
     protected IDataHandler dh;
@@ -61,8 +59,8 @@ public abstract class ServiceBase {
      * Sets the default values for the helper classes if not yet set
      */
     protected void initialize() {
-        this.auth = this.auth == null ? (IAuthenticationService) new AuthenticationService() : this.auth;
-        this.http = this.http == null ? (IHttpService) new HttpService() : this.http;
+        this.auth = this.auth == null ? new AuthenticationService() : this.auth;
+        this.http = this.http == null ? new HttpService() : this.http;
         this.dh = this.dh == null ? ServiceLocator.getDataHandler() : this.dh;
 
         if (this.logger == null) {

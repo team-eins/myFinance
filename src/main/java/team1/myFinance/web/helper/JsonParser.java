@@ -1,4 +1,4 @@
-package main.java.team1.myFinance.web.helper;
+package team1.myFinance.web.helper;
 
 import java.io.IOException;
 
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class JsonParser {
 
     /**
-     * Parses the data string in instance of target
+     * Parses the team1.myFinance.data string in instance of target
      * @param data the input string
      * @param target the class of the target type
      * @param <T> the target type

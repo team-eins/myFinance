@@ -1,5 +1,7 @@
-package main.java.team1.myFinance.web.helper;
+package team1.myFinance.web.helper;
 
+
+import team1.myFinance.contracts.IHttpService;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -15,7 +17,7 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletResponse;
 
-public class HttpService implements main.java.team1.myFinance.contracts.IHttpService {
+public class HttpService implements IHttpService {
 
     @Override
     public void cancelRequest(HttpServletResponse response, int status) {

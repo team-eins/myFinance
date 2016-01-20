@@ -1,10 +1,11 @@
-package main.java.team1.myFinance.web.model;
+package team1.myFinance.web.model;
+
+import team1.myFinance.data.model.SavedUser;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import main.java.data.model.SavedUser;
 
 public class UserInfo {
 

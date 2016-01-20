@@ -1,4 +1,4 @@
-package main.java.team1.myFinance.web;
+package team1.myFinance.web;
 
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 
@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.logging.log4j.LogManager;
 
-import main.java.data.model.Transaction;
+import team1.myFinance.data.model.Transaction;
 
 @Path("/transactions")
 public class TransactionService extends ServiceBase {
@@ -30,7 +30,7 @@ public class TransactionService extends ServiceBase {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection<main.java.team1.myFinance.web.model.Transaction> getCategories(@Context HttpServletResponse response) {
+    public Collection<team1.myFinance.web.model.Transaction> getCategories(@Context HttpServletResponse response) {
 
         this.initialize();
         Collection<Transaction> transactions = dh.getAllTransactions();
@@ -40,7 +40,7 @@ public class TransactionService extends ServiceBase {
             return null;
         }
 
-        return main.java.team1.myFinance.web.model.Transaction.parse(transactions);
+        return team1.myFinance.web.model.Transaction.parse(transactions);
 
     }
 	

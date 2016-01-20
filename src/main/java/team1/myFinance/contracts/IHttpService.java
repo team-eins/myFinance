@@ -1,4 +1,4 @@
-package main.java.team1.myFinance.contracts;
+package team1.myFinance.contracts;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;

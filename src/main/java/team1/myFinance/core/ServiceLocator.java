@@ -1,11 +1,11 @@
-package main.java.team1.myFinance.core;
+package team1.myFinance.core;
 
 import org.apache.logging.log4j.LogManager;
 
 import org.apache.logging.log4j.Logger;
 
-import main.java.data.handler.DataHandler;
-import main.java.team1.myFinance.contracts.IDataHandler;
+import team1.myFinance.data.handler.DataHandler;
+import team1.myFinance.contracts.IDataHandler;
 
 public class ServiceLocator {
 
