@@ -3,10 +3,11 @@ var path = require('path');
 
 module.exports = {
 
-    entry: './app/boot',
+    entry: './app/scripts/boot',
     output: {
-        path: __dirname,
-        filename: './dist/bundle.js'
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/dist/',
+        filename: 'bundle.js'
     },
 
     // Turn on source maps

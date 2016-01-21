@@ -1,0 +1,28 @@
+<nav class="navbar navbar-default ">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand">{{ title }}</a>
+        </div>
+        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a [routerLink]="['./Home']">Home</a></li>
+                <li><a [routerLink]="['./Login']">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container">
+    <router-outlet></router-outlet>
+</main>
+
+<footer>
+    <p><span class="glyphicon glyphicon-education"></span> Brought to you by Team Eins</p>
+</footer>
