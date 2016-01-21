@@ -5,7 +5,7 @@ module.exports = {
 
     entry: './app/scripts/boot',
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'app/dist'),
         publicPath: '/dist/',
         filename: 'bundle.js'
     },
