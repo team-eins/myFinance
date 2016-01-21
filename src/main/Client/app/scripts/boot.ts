@@ -1,9 +1,13 @@
 import {bind}    from 'angular2/core';
 import {bootstrap}    from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
+import {HTTP_PROVIDERS} from 'angular2/http';
 import {AppComponent} from './components/app.component.ts';
+import {UserService} from "./services/user.service";
 
 bootstrap(AppComponent, [
     ROUTER_PROVIDERS,
-    bind(LocationStrategy).toClass(HashLocationStrategy)
+    HTTP_PROVIDERS,
+    bind(LocationStrategy).toClass(HashLocationStrategy),
+    UserService
 ]);
