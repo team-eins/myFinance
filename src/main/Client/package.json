@@ -1,0 +1,24 @@
+{
+  "name": "myfinance",
+  "version": "1.0.0",
+  "description": "Webapp to manage transactions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/team-eins/myfinance.git"
+  },
+  "author": "team-eins",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/team-eins/myfinance/issues"
+  },
+  "homepage": "https://github.com/team-eins/myfinance#readme",
+  "devDependencies": {
+    "ts-loader": "^0.8.0",
+    "typescript": "^1.7.5",
+    "webpack": "^1.12.11"
+  }
+}
