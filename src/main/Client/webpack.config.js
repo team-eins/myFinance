@@ -5,9 +5,8 @@ module.exports = {
 
     entry: './app/scripts/boot',
     output: {
-        path: path.resolve(__dirname, 'app/dist'),
-        publicPath: '/dist/',
-        filename: 'bundle.js'
+        path: path.resolve(__dirname, 'app/scripts/'),
+        filename: 'myfinance-app.js'
     },
 
     // Turn on source maps
