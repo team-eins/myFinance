@@ -28,7 +28,7 @@ public class UserInfo {
 				ui.role = "admin";			
 				break;
 			case 2:
-				ui.role = "author";				
+				ui.role = "user";
 				break;
 			case 3:
 				ui.role = "guest";			

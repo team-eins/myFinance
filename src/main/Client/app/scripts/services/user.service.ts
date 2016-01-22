@@ -13,50 +13,58 @@ export class UserService {
     public login:(creds:Credentials) => Promise<any> = function (creds:Credentials) {
         return new Promise((resolve, reject) => {
 
-            var hash = CryptoJS.SHA256(creds.password).toString(CryptoJS.enc.Base64);
+                this.http.post('/api/users/login', JSON.stringify({
+                    username: creds.username,
+                    hash: this.getHashCode(creds)
+                })).subscribe(
+                    response => {
 
-            this.http.post('/api/users/login', JSON.stringify({username: creds.username, hash: hash})).subscribe(
-                response => {
-                    if (response.status === 200) {
-                        resolve(response.json());
-                    }
-                    else if (response.status === 404) {
-                        console.info('AreaService: Fail to load data form server. Serving demo data');
-                        //resolve(this.demoAreas);
-                        reject(response);
-                    }
-                    else {
-                        reject(response);
-                    }
-                },
-                err => reject('Data not available')
-            );
-        });
+                        console.log(response);
+
+                        var data = response.json();
+                        console.log(data);
+
+                        var token = data.token;
+                        if (token) {
+                            localStorage.setItem("id_token", token);
+                            resolve();
+                        }
+                        else {
+                            reject("Did not receive token.");
+
+                            // Todo: remove
+                            console.log(response);
+                        }
+                    },
+                    err => {
+                        // Todo: remove
+                        console.log(err);
+
+                        reject('Data not available');
+                    });
+            }
+        );
     };
 
-    public register:(creds:Credentials) => Promise<any> = function (creds:Credentials) {
+    public register:(creds:Credentials) => Promise < any > = function (creds:Credentials) {
         return new Promise((resolve, reject) => {
 
-            var hash = CryptoJS.SHA256(creds.password).toString(CryptoJS.enc.Base64);
-
-            this.http.post('/api/users/register', JSON.stringify({username: creds.username, hash: hash})).subscribe(
+            this.http.post('/api/users/register', JSON.stringify({
+                username: creds.username,
+                hash: this.getHashCode(creds)
+            })).subscribe(
                 response => {
-                    if (response.status === 200) {
-                        resolve(response.json());
-                    }
-                    else if (response.status === 404) {
-                        console.info('AreaService: Fail to load data form server. Serving demo data');
-                        //resolve(this.demoAreas);
-                        reject(response);
-                    }
-                    else {
-                        reject(response);
-                    }
+
+                    // Try to login
+                    this.login(creds).then(resolve).catch(reject);
                 },
                 err => reject(err)
             );
         });
     };
 
+    private getHashCode:(creds:Credentials) => string = function (creds:Credentials) {
 
+        return CryptoJS.SHA256(creds.username + creds.password).toString(CryptoJS.enc.Base64);
+    };
 }

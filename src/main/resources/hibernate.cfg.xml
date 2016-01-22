@@ -26,6 +26,7 @@
 
         <!-- Names the annotations -->
         <mapping class="team1.myFinance.data.model.Transaction"/>
+        <mapping class="team1.myFinance.data.model.SavedUser" />
 
     </session-factory>
 </hibernate-configuration> 
