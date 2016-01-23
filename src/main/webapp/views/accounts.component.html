@@ -1,0 +1,27 @@
+<section>
+    <div class="row">
+        <div class="col-md-4 col-sm-6" *ngFor="#account of accounts">
+            <div class="card" >
+                <div class="card-block">
+                    <h4 class="card-title">{{ account.name }}</h4>
+                    <table class="table">
+                        <tr>
+                            <td>aktueller Kontostand:</td>
+                            <td>{{ account.balance | currency:'Eur' }}</td>
+                        </tr>
+                        <tr>
+                            <td>Letzer Monat:</td>
+                            <td>{{ account.lastMonth | currency:'Eur' }}</td>
+                        </tr>
+                        <tr>
+                            <td>Buchungen:</td>
+                            <td>{{ account.transactionCount }}</td>
+                        </tr>
+
+                    </table>
+                    <a href="#" class="btn btn-primary">Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
