@@ -52,3 +52,7 @@ footer {
 .login h3 {
     margin-bottom: 1em;
 }
+
+.table>tbody>tr>td {
+    border-top: none;
+}

@@ -6,6 +6,7 @@ module.exports = {
     entry: './app/scripts/boot',
     output: {
         path: path.resolve(__dirname, 'app/scripts/'),
+        publicPath: "/scripts/",
         filename: 'myfinance-app.js'
     },
 
