@@ -1,6 +1,5 @@
 package team1.myFinance.data.programs;
 
-
 import team1.myFinance.contracts.IDataHandler;
 import team1.myFinance.data.handler.DataHandler;
 
@@ -10,8 +9,10 @@ public class InitialUpload {
 		
 		IDataHandler handler = new DataHandler(true);
 
-		//transactions
-		int transID = handler.createTransaction("Test1").getId();
+//		//transactions
+//		int transID = handler.createTransaction("Test1").getId();
+//		
+//		int userID = handler.createUser("Pati", "admin", 1).getId();
 
 		handler.closeDatabaseConnection();
 		

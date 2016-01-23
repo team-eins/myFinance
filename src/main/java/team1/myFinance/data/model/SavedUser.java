@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "SavedUser")
@@ -21,7 +22,10 @@ public class SavedUser {
 	private String alias;
 	private String password;
 	private int role;
-
+	@OneToMany(mappedBy = "owner")
+	@Cascade({ CascadeType.DELETE })
+	private Collection<Account> accounts = new LinkedList<>();
+	
 	public int getId() {
 		return id;
 	}
@@ -46,5 +50,11 @@ public class SavedUser {
 	public void setRole(int role) {
 		this.role = role;
 	}
-
+	public Collection<Account> getAccounts() {
+		return accounts;
+	}
+	public void setAccounts(Collection<Account> accounts) {
+		this.accounts = accounts;
+	}
+	
 }

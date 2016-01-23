@@ -4,21 +4,21 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
 
 import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
+
 import team1.myFinance.contracts.IDataHandler;
 import team1.myFinance.data.model.*;
 import team1.myFinance.data.model.Transaction;
+import team1.myFinance.web.model.AccountType;
 
 public class DataHandler implements IDataHandler {
 
@@ -199,8 +199,7 @@ public class DataHandler implements IDataHandler {
 	 * java.lang.String, int)
 	 */
 	@Override
-	public SavedUser changeUser(int userID, int role)
-			throws IllegalArgumentException, IllegalStateException {
+	public SavedUser changeUser(int userID, int role) throws IllegalArgumentException, IllegalStateException {
 
 		Session session = openSession();
 
@@ -281,20 +280,28 @@ public class DataHandler implements IDataHandler {
 		return user;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see team1.myshop.contracts.IDataHandler#createCategory(java.lang.String)
-	 */
 	@Override
-	public Transaction createTransaction(String name) throws IllegalStateException {
+	public Transaction createTransaction(String name, int accFromID, int accToID, double amount)
+			throws IllegalStateException {
 
-		// create category instance
-		Transaction transaction = new Transaction();
-		transaction.setName(name);
+		Transaction trans = new Transaction();
 
-		saveObjectToDb(transaction);
-		return transaction;
+		Account accFrom = getAccountByID(accFromID);
+		Account accTo   = getAccountByID(accToID);
+		
+		trans.setAmount(amount);
+		trans.setFrom(accFrom);
+		trans.setTo(accTo);
+		trans.setName(name);
+		trans.setPostingdate(new Date());
+
+		// save user in database
+		saveObjectToDb(trans);
+		
+		changeAccount(accFrom.getId(), accFrom.getBalance() - amount);
+		changeAccount(accTo.getId(), accTo.getBalance() + amount);
+		
+		return trans;
 
 	}
 
@@ -402,11 +409,11 @@ public class DataHandler implements IDataHandler {
 			// commit
 			session.getTransaction().commit();
 
-			//user not available
-			if(results.size() < 1){
+			// user not available
+			if (results.size() < 1) {
 				return null;
 			}
-			
+
 			// only one element in the list because the id is unique
 			return results.get(0);
 
@@ -419,9 +426,8 @@ public class DataHandler implements IDataHandler {
 			session.close();
 		}
 
-		
 	}
-	
+
 	// search for category by ID
 	/*
 	 * (non-Javadoc)
@@ -542,6 +548,162 @@ public class DataHandler implements IDataHandler {
 		}
 		// no appropriate user found in database
 		return null;
+	}
+
+	@Override
+	public Collection<Account> getAccountsFromUser(int userID) throws IllegalStateException {
+
+		Session session = openSession();
+
+		try {
+
+			// begin transaction
+			session.beginTransaction();
+
+			Criteria cr = session.createCriteria(SavedUser.class);
+			cr.add(Restrictions.eq("id", userID));
+			List<SavedUser> results = cr.list();
+
+			// commit
+			session.getTransaction().commit();
+
+			if (results.size() == 0)
+				throw new IllegalArgumentException();
+			// user not found with this id
+
+			Collection<Account> accounts = results.get(0).getAccounts();
+
+			Collection<Account> ret = new ArrayList<>(accounts);
+
+			return ret;
+
+		} catch (IllegalArgumentException e) { // Exception -> rollback
+			session.getTransaction().rollback();
+			System.out.println("no user with this ID in the database");
+			throw new IllegalArgumentException("no user with this ID in the database");
+		} catch (Exception e) { // Exception -> rollback
+			session.getTransaction().rollback();
+			throw new IllegalStateException("something went wrong by getting the account list");
+		} finally { // close session
+			session.close();
+		}
+
+	}
+
+	@Override
+	public Account createAccount(int userID, AccountType type) throws IllegalStateException {
+
+		SavedUser user = getUserByID(userID);
+
+		// create Account instance
+		Account account = new Account();
+		account.setBalance(0d);
+		account.setOwner(user);
+
+		switch (type) {
+		case SAVINGS:
+			account.setType(0);
+			break;
+		case CREDITCARD:
+			account.setType(1);
+			break;
+		}
+
+		// save user in database
+		saveObjectToDb(account);
+		return account;
+	}
+
+	@Override
+	public Collection<Transaction> getTransactionsFromAccount(int id) throws IllegalArgumentException {
+
+		Session session = openSession();
+
+		try {
+
+			// begin transaction
+			session.beginTransaction();
+
+			Criteria cr = session.createCriteria(Account.class);
+			cr.add(Restrictions.eq("id", id));
+			List<Account> results = cr.list();
+
+			// commit
+			session.getTransaction().commit();
+
+			// user not available
+			if (results.size() < 1) {
+				return null;
+			}
+
+			Collection<Transaction> trans = new ArrayList<>();
+
+			trans.addAll(results.get(0).getFromTransactions());
+			trans.addAll(results.get(0).getToTransactions());
+
+			return trans;
+
+		} catch (IndexOutOfBoundsException e) {
+			// Exception -> rollback
+			session.getTransaction().rollback();
+			throw new IllegalArgumentException("object with this ID is not in the database", e);
+		} finally {
+			// close session
+			session.close();
+		}
+
+	}
+
+	@Override
+	public Account getAccountByID(int accID) throws IllegalStateException {
+		return this.<Account> searchForID(accID, Account.class);
+	}
+
+	private Account changeAccount(int accID, double newBalance) throws IllegalStateException {
+		
+		Session session = openSession();
+
+		try {
+
+			// begin transaction
+			session.beginTransaction();
+
+			// get category
+			Criteria cr = session.createCriteria(Account.class);
+			cr.add(Restrictions.eq("id", accID));
+			List<Account> results = cr.list();
+
+			if (results.size() == 0)
+				throw new IllegalArgumentException("accountID");
+
+			Account account = results.get(0);
+
+			// change balance
+			account.setBalance(newBalance);
+
+
+			// update category
+			session.update(account);
+
+			// commit
+			session.getTransaction().commit();
+
+			return account;
+
+		} catch (IllegalArgumentException e) {
+			// Exception -> rollback
+			session.getTransaction().rollback();
+			System.out.println("no account with this ID in the database");
+			throw new IllegalArgumentException(e.getMessage());
+		} catch (Exception e) {
+			// Exception -> rollback
+			session.getTransaction().rollback();
+			throw new IllegalStateException("account change");
+		} finally {
+			// close session
+			session.close();
+		}
+		
 	}
 
 }

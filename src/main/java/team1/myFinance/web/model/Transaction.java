@@ -8,6 +8,9 @@ public class Transaction {
 
 	public int id;
 	public String name;
+	public Account from;
+	public Account to;
+	public double amount;
 	
     public static Transaction parse(team1.myFinance.data.model.Transaction transaction) {
         if (transaction == null) {
@@ -18,6 +21,9 @@ public class Transaction {
 
         trans.id = transaction.getId();
         trans.name = transaction.getName();
+        trans.from = Account.parse(transaction.getFrom());
+        trans.to   = Account.parse(transaction.getTo());
+        trans.amount = transaction.getAmount();
          
         return trans;
     }

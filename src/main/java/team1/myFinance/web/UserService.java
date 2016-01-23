@@ -31,7 +31,6 @@ public class UserService extends ServiceBase {
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
-    //@Consumes(MediaType.APPLICATION_JSON)
     public TokenWrapper login(String credstring, @Context HttpServletRequest request,
                               @Context HttpServletResponse response) {
 

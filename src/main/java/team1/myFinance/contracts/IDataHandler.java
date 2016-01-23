@@ -1,7 +1,9 @@
 package team1.myFinance.contracts;
 
+import team1.myFinance.data.model.Account;
 import team1.myFinance.data.model.SavedUser;
 import team1.myFinance.data.model.Transaction;
+import team1.myFinance.web.model.AccountType;
 
 import java.util.Collection;
 
@@ -15,7 +17,7 @@ public interface IDataHandler {
 
 	SavedUser createUser(String alias, String password, int role) throws IllegalStateException;
 
-	Transaction createTransaction(String name) throws IllegalStateException;
+	Transaction createTransaction(String name, int accFromID, int accToID, double amount) throws IllegalStateException;
 
 	// get all transactions
 	Collection<Transaction> getAllTransactions() throws IllegalStateException;
@@ -38,5 +40,18 @@ public interface IDataHandler {
 	SavedUser getUserByName(String alias) throws IllegalArgumentException;
 
 	void deleteTransaction(int transactionID) throws IllegalArgumentException;
+	
+	// get accounts from user
+	Collection<Account> getAccountsFromUser(int userID) throws IllegalStateException;
+	
+	//create new account for user
+	Account createAccount(int userID, AccountType type) throws IllegalStateException;
+	
+	//create new account for user
+	Account getAccountByID(int accID) throws IllegalStateException;
+	
+	//get all transactions from account
+	Collection<Transaction> getTransactionsFromAccount(int id) throws IllegalArgumentException;
+
 
 }
