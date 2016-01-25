@@ -46,18 +46,18 @@ public class UserService extends ServiceBase {
             return null;
         }
 
-//        assert credentials != null;
-//        SavedUser user = dh.getUserLogin(credentials.username, credentials.hash);
-//        if (user == null) {
-//            http.cancelRequest(response, SC_UNAUTHORIZED);
-//            return null;
-//        }
+        assert credentials != null;
+        SavedUser user = dh.getUserLogin(credentials.username, credentials.hash);
+        if (user == null) {
+            http.cancelRequest(response, SC_UNAUTHORIZED);
+            return null;
+        }
 
         // Demodaten
-        SavedUser user = new SavedUser();
-        user.setAlias("Tom Riddle");
-        user.setId(1);
-        user.setRole(2);
+//        SavedUser user = new SavedUser();
+//        user.setAlias("Tom Riddle");
+//        user.setId(1);
+//        user.setRole(2);
 
         // Create auth tokenWrapper
         TokenWrapper tokenWrapper = new TokenWrapper();

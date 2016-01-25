@@ -41,7 +41,14 @@ public class TestService extends ServiceBase {
 		
 		this.initialize();
 		
-		Collection<Account> accounts = dh.getAccountsFromUser(1);
+		int userID1 = dh.createUser("Pati", "admin", 1).getId();
+		int userID2 = dh.createUser("Andi", "admin", 1).getId();
+		
+		int accID1 = dh.createAccount(userID1, AccountType.SAVINGS).getId();
+		int accID2 = dh.createAccount(userID2, AccountType.CREDITCARD).getId();
+		
+		int transID1 = dh.createTransaction("Test 1", accID1, accID2, 500).getId();
+		int transID2 = dh.createTransaction("Test 2", accID2, accID1, 200).getId();
 		
 		return "true";
 	}
