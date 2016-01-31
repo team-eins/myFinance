@@ -32,10 +32,7 @@ export class UserService {
                 })).subscribe(
                     response => {
 
-                        console.log(response);
-
                         var data = response.json();
-                        console.log(data);
 
                         var token = data.token;
                         if (token) {
