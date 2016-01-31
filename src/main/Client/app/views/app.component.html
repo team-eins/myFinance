@@ -14,12 +14,12 @@
         <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a [routerLink]="['./Home']">Home</a></li>
-                <li><a [routerLink]="['./Login']">Login</a></li>
-                <li><a [routerLink]="['./Accounts']">Konten</a></li>
+                <li *ngIf="username"><a [routerLink]="['./Accounts']">Konten</a></li>
             </ul>
 
-            <div class="navbar-right" *ngIf="username">
-                <p class="navbar-text">Signed in as {{ username }} <a (click)="onLogout()">logout</a></p>
+            <div class="navbar-right" >
+                <p class="navbar-text" *ngIf="username">Signed in as {{ username }} <a (click)="onLogout()">logout</a></p>
+                <p class="navbar-text" *ngIf="!username"><a [routerLink]="['./Login']">Login</a></p>
             </div>
         </div>
 

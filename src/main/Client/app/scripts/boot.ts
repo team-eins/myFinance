@@ -1,5 +1,5 @@
 // Vendor
-import {provide}    from 'angular2/core';
+import {provide, enableProdMode}    from 'angular2/core';
 import {bootstrap}    from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
@@ -10,6 +10,7 @@ import {AppComponent} from './components/app.component.ts';
 import {UserService} from "./services/user.service";
 import {AccountingService} from './services/accounting.service';
 
+enableProdMode();
 bootstrap(AppComponent, [
     HTTP_PROVIDERS,
 
