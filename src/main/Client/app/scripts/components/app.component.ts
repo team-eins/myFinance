@@ -5,6 +5,7 @@ import {HomeComponent} from "./home.component";
 import {LoginComponent} from "./login.component";
 import {RegisterComponent} from "./register.component";
 import {AccountsComponent} from "./accounts.component";
+import {UserService} from "../services/user.service";
 
 
 @Component({
@@ -21,4 +22,18 @@ import {AccountsComponent} from "./accounts.component";
 export class AppComponent {
 
     public title = 'myFinance';
+    public username: string;
+
+    onLogonEmitter: any;
+    onLogoffEmitter: any;
+
+    constructor(private userService: UserService) {
+
+        this.onLogonEmitter = userService.getLogonEmitter().subscribe(name => this.username = name);
+        this.onLogoffEmitter = userService.getLogoffEmitter().subscribe(() => this.username = undefined);
+    }
+
+    onLogout = function(){
+        this.userService.logout();
+    }
 }

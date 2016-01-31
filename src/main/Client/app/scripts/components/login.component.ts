@@ -11,22 +11,27 @@ import {UserService} from "../services/user.service";
 })
 export class LoginComponent {
 
-    constructor(
-        private router:Router,
-        private userService:UserService){}
+    constructor(private router:Router,
+                private userService:UserService) {
+    }
 
     model:Credentials = new Credentials('', '');
 
     submitted = false;
+    error:String;
 
     onSubmit() {
-        console.log("Submitted " + this.model.username + ' ' + this.model.password);
-        this.submitted = true;
 
-        this.userService.login(this.model).catch((error) => console.log(error));
+        this.userService.login(this.model)
+            .then(() => this.router.navigate(['Accounts']))
+            .catch(
+                (error) => {
+                    this.error = "Anmeldung fehlgeschlagen";
+                    console.log(error)
+                });
     }
 
-    onRegister(){
+    onRegister() {
         this.router.navigate(['Register']);
     }
 }
