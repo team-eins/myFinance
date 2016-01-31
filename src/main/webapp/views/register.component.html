@@ -44,6 +44,10 @@
                     </button>
                 </div>
             </div>
+
+            <div class="alert alert-danger" role="alert" *ngIf="error">
+                <strong>Error: </strong> {{ error }}
+            </div>
         </form>
 
     </div>
