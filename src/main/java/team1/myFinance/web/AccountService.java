@@ -97,9 +97,9 @@ public class AccountService extends ServiceBase {
 	}
 
 	@POST
-	@Path("/{id}/transactions")
+	@Path("/transactions")
 	@Produces(MediaType.APPLICATION_JSON)
-	public team1.myFinance.web.model.Transaction createTransaction(@PathParam("id") int id, String transString,
+	public team1.myFinance.web.model.Transaction createTransaction(String transString,
 			@Context HttpServletResponse response) {
 
 		this.initialize();
